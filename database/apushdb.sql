@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.6
+-- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 22-12-2020 a las 22:41:33
--- Versión del servidor: 5.7.17-log
--- Versión de PHP: 5.6.30
+-- Tiempo de generación: 23-12-2020 a las 05:09:47
+-- Versión del servidor: 8.0.17
+-- Versión de PHP: 7.3.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -17,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `shdb`
+-- Base de datos: `apushdb`
 --
 
 -- --------------------------------------------------------
@@ -117,17 +119,24 @@ CREATE TABLE `turnos` (
 --
 
 CREATE TABLE `usuarioroles` (
-  `usuario` varchar(20) NOT NULL,
+  `id` int(11) NOT NULL,
+  `estado` int(11) NOT NULL,
+  `idusuario` int(11) NOT NULL,
   `idrol` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `usuarioroles`
 --
 
-INSERT INTO `usuarioroles` (`usuario`, `idrol`) VALUES
-('71002525', 1),
-('71002525', 2);
+INSERT INTO `usuarioroles` (`id`, `estado`, `idusuario`, `idrol`) VALUES
+(1, 1, 1, 1),
+(2, 1, 1, 2),
+(3, 1, 2, 1),
+(4, 1, 2, 2),
+(5, 1, 3, 2),
+(6, 1, 4, 2),
+(7, 1, 5, 2);
 
 -- --------------------------------------------------------
 
@@ -136,6 +145,7 @@ INSERT INTO `usuarioroles` (`usuario`, `idrol`) VALUES
 --
 
 CREATE TABLE `usuarios` (
+  `idusuario` int(11) NOT NULL,
   `usuario` varchar(20) NOT NULL,
   `password` varchar(50) NOT NULL,
   `nombre` varchar(30) NOT NULL,
@@ -148,8 +158,12 @@ CREATE TABLE `usuarios` (
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`usuario`, `password`, `nombre`, `apepat`, `apemat`, `estado`) VALUES
-('71002525', '123456', 'Peko', 'Peko', 'Peko', 1);
+INSERT INTO `usuarios` (`idusuario`, `usuario`, `password`, `nombre`, `apepat`, `apemat`, `estado`) VALUES
+(1, 'root', '12345678', 'Peko', 'Peko', 'Peko', 1),
+(2, 'feplapush', '3y9jc4fphk', 'Freddy Erico', 'Palacios', 'Loayza', 1),
+(3, 'edphapush', 'nqr6ddp5b3', 'Eduardo', 'Palacios', 'Huamani ', 1),
+(4, 'caphapush', 'we2tqh8hum', 'Carlos', 'Palacios', 'Huamani', 1),
+(5, 'lesaapush', '7rgegevvv8', 'Leslie', 'Sanabria', 'Aguirre', 1);
 
 --
 -- Índices para tablas volcadas
@@ -199,14 +213,31 @@ ALTER TABLE `turnos`
 -- Indices de la tabla `usuarioroles`
 --
 ALTER TABLE `usuarioroles`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `ru` (`idrol`),
-  ADD KEY `ur` (`usuario`);
+  ADD KEY `ur` (`idusuario`);
 
 --
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`usuario`);
+  ADD PRIMARY KEY (`idusuario`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `usuarioroles`
+--
+ALTER TABLE `usuarioroles`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restricciones para tablas volcadas
@@ -231,7 +262,8 @@ ALTER TABLE `profesores`
 --
 ALTER TABLE `usuarioroles`
   ADD CONSTRAINT `ru` FOREIGN KEY (`idrol`) REFERENCES `roles` (`idrol`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `ur` FOREIGN KEY (`usuario`) REFERENCES `usuarios` (`usuario`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `ur` FOREIGN KEY (`idusuario`) REFERENCES `usuarios` (`idusuario`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
