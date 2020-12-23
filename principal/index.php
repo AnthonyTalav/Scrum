@@ -1,6 +1,6 @@
 <?php
 
-$alert = '';
+
 session_start();
 
 if (empty($_SESSION['active'])) {
@@ -23,7 +23,7 @@ if (empty($_SESSION['active'])) {
 
 			<section class="section">
 				
-				<div class="div-opcion1"> <a href=""> <img src="../img/usuarios (1).png" height="" width="" alt=""> Gestionar Usuarios</a></div>
+				<div class="div-opcion1"> <a href="../vista/admiUsuario"> <img src="../img/usuarios (1).png" height="" width="" alt=""> Gestionar Usuarios</a></div>
 
 				<div class="div-opcion2"><a href=""> <img src="../img/edit.png" height="" width="" alt=""> Gestionar Alumnos</a> </div>
 
